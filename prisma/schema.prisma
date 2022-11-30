@@ -1,0 +1,36 @@
+generator client {
+  provider = "prisma-client-js"
+  previewFeatures = ["referentialIntegrity"]
+}
+datasource db {
+  provider = "mysql"
+  url = env("DATABASE_URL")
+  referentialIntegrity = "prisma"
+}
+
+
+model Student{
+  id String @id 
+  name String 
+  age Int
+  major String
+   classroom Classroom[]
+}
+
+model Teacher {
+  id String @id 
+  name String
+   classroom Classroom[]
+}
+
+
+model Classroom {
+  id String @id
+  name String
+  Student_id String
+  Teacher_id String
+  student  Student @relation(fields: [Student_id], references: [id])
+  teacher  Teacher @relation(fields: [Teacher_id], references: [id])
+}
+
+
